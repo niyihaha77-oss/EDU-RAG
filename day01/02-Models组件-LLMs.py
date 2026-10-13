@@ -15,7 +15,7 @@ def dm01():
         max_tokens=None,
         timeout=None,
         max_retries=2,
-        api_key=os.getenv('DEEPSEEK_API_KEY'),
+        api_key=os.environ.get('DEEPSEEK_API_KEY'),
         base_url=os.getenv('BASE_URL'),
         # organization="...",
         # other params...
