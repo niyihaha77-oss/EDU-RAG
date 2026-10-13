@@ -8,6 +8,10 @@
     5. 文本检索:从大量文本中检索出与查询文本最相似的文本
 
 """
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 def dm01():
     from langchain_ollama import OllamaEmbeddings
 
@@ -16,6 +20,7 @@ def dm01():
         model='bge-m3',
         temperature=0.1
     )
+
 
     # 2. 单个文本向量化
     res1 = model.embed_query('这是一个测试文档')

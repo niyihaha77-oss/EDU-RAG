@@ -4,8 +4,13 @@
 
 """
 # todo 1. 通用提示词--> 零样本学习
+import os
+from pathlib import Path
 from langchain_core.prompts import PromptTemplate,FewShotPromptTemplate
 from langchain_ollama import OllamaLLM
+from langchain_openai import ChatOpenAI
+from dotenv import load_dotenv
+load_dotenv(Path(__file__).absolute().parent.parent/'.env')
 def zero_short_learning(user_name):
     # 1.1 初始化本地大模型
     model = OllamaLLM(
@@ -31,9 +36,16 @@ def zero_short_learning(user_name):
 # todo 2. 通用提示词--> 少数样本学习
 def few_shot_learning():
     # 2.1 初始化本地大模型
-    model = OllamaLLM(
-        model='qwen2.5:7b',
+    # model = OllamaLLM(
+    #     model='qwen2.5:7b',
+    #     temperature=0.1
+    # )
+    model = ChatOpenAI(
+        base_url=os.getenv('qw_base_url'),
+        model='qwen-plus',
+        api_key=os.environ.get('DASHSCOPE_API_KEY'),
         temperature=0.1
+
     )
     # 2.2 定义样本实例数据集列表[字典]
     examples = [
@@ -63,7 +75,7 @@ def few_shot_learning():
     print(prompt_text)
     # 2.6 发送提示词给模型，获取结果
     res = model.invoke(prompt_text)
-    print(f"res:{res}")
+    print(f"res:{res.content}")
     pass
 
 
